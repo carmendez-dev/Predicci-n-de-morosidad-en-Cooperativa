@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción de Morosidad - Ahorro Valle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Predicción de Morosidad</h1>
+            <p class="subtitle">Ahorro Valle - Sistema de Evaluación Crediticia</p>
+            <p class="modelo-info">Modelo activo: <span id="modelo-nombre">{{ modelo_nombre }}</span></p>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="/" class="active">Predicción</a>
+            <a href="/estadisticas">Estadísticas</a>
+            <a href="/about">Acerca de</a>
+        </nav>
+
+        <main>
+            <div class="form-container">
+                <h2>Ingrese los Datos del Solicitante</h2>
+                
+                <form id="prediccion-form">
+                    <!-- Datos Personales -->
+                    <div class="form-section">
+                        <h3>Datos Personales</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="edad">Edad (años)</label>
+                                <input type="number" id="edad" name="edad" min="18" max="100" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="genero">Género</label>
+                                <select id="genero" name="genero" required>
+                                    <option value="">Seleccione...</option>
+                                    {% for opcion in opciones.genero %}
+                                    <option value="{{ opcion }}">{{ 'Masculino' if opcion == 'M' else 'Femenino' }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="zona">Zona de Residencia</label>
+                                <select id="zona" name="zona" required>
+                                    <option value="">Seleccione...</option>
+                                    {% for opcion in opciones.zona %}
+                                    <option value="{{ opcion }}">{{ opcion }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Datos Laborales -->
+                    <div class="form-section">
+                        <h3>Información Laboral</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="tipo_empleo">Tipo de Empleo</label>
+                                <select id="tipo_empleo" name="tipo_empleo" required>
+                                    <option value="">Seleccione...</option>
+                                    {% for opcion in opciones.tipo_empleo %}
+                                    <option value="{{ opcion }}">{{ opcion }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="antiguedad">Antigüedad Laboral (años)</label>
+                                <input type="number" id="antiguedad" name="antiguedad" min="0" max="50" step="1" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ingresos">Ingresos Mensuales ($)</label>
+                                <input type="number" id="ingresos" name="ingresos" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Historial Crediticio -->
+                    <div class="form-section">
+                        <h3>Historial Crediticio</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="score_crediticio">Score Crediticio</label>
+                                <input type="number" id="score_crediticio" name="score_crediticio" min="300" max="850" required>
+                                <small>Rango: 300-850</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pagos_previos">Pagos Previos Realizados</label>
+                                <input type="number" id="pagos_previos" name="pagos_previos" min="0" max="100" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="creditos_previos">Créditos Previos</label>
+                                <input type="number" id="creditos_previos" name="creditos_previos" min="0" max="50" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información del Crédito Solicitado -->
+                    <div class="form-section">
+                        <h3>Crédito Solicitado</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="monto_credito">Monto del Crédito ($)</label>
+                                <input type="number" id="monto_credito" name="monto_credito" min="0" step="1" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="plazo_meses">Plazo (meses)</label>
+                                <select id="plazo_meses" name="plazo_meses" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="6">6 meses</option>
+                                    <option value="12">12 meses</option>
+                                    <option value="24">24 meses</option>
+                                    <option value="36">36 meses</option>
+                                    <option value="48">48 meses</option>
+                                    <option value="60">60 meses</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="destino_credito">Destino del Crédito</label>
+                                <select id="destino_credito" name="destino_credito" required>
+                                    <option value="">Seleccione...</option>
+                                    {% for opcion in opciones.destino_credito %}
+                                    <option value="{{ opcion }}">{{ opcion }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Garantías -->
+                    <div class="form-section">
+                        <h3>Garantías</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="tipo_garantia">Tipo de Garantía</label>
+                                <select id="tipo_garantia" name="tipo_garantia" required>
+                                    <option value="">Seleccione...</option>
+                                    {% for opcion in opciones.tipo_garantia %}
+                                    <option value="{{ opcion }}">{{ opcion }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="valor_garantia">Valor de la Garantía ($)</label>
+                                <input type="number" id="valor_garantia" name="valor_garantia" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Variables Económicas -->
+                    <div class="form-section">
+                        <h3>Variables Económicas</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="precio_soya">Precio Soya ($/ton)</label>
+                                <input type="number" id="precio_soya" name="precio_soya" min="0" step="0.01" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="precio_vino">Precio Vino ($/litro)</label>
+                                <input type="number" id="precio_vino" name="precio_vino" min="0" step="0.01" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="uso_productos">Productos Bancarios Usados</label>
+                                <input type="number" id="uso_productos" name="uso_productos" min="0" max="10" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Predecir Morosidad</button>
+                        <button type="reset" class="btn btn-secondary">Limpiar Formulario</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Resultado de la Predicción -->
+            <div id="resultado-container" class="resultado-container" style="display: none;">
+                <h2>Resultado de la Evaluación</h2>
+                
+                <div class="resultado-card">
+                    <div class="resultado-header">
+                        <h3 id="resultado-titulo"></h3>
+                        <div id="resultado-badge" class="badge"></div>
+                    </div>
+
+                    <div class="resultado-body">
+                        <div class="probabilidad-container">
+                            <div class="probabilidad-item">
+                                <span class="label">Probabilidad de NO Morosidad:</span>
+                                <div class="progress-bar">
+                                    <div id="prob-no-moroso-bar" class="progress-fill green"></div>
+                                </div>
+                                <span id="prob-no-moroso" class="percentage"></span>
+                            </div>
+
+                            <div class="probabilidad-item">
+                                <span class="label">Probabilidad de Morosidad:</span>
+                                <div class="progress-bar">
+                                    <div id="prob-moroso-bar" class="progress-fill red"></div>
+                                </div>
+                                <span id="prob-moroso" class="percentage"></span>
+                            </div>
+                        </div>
+
+                        <div class="riesgo-info">
+                            <h4>Nivel de Riesgo: <span id="nivel-riesgo"></span></h4>
+                        </div>
+
+                        <div class="recomendacion">
+                            <h4>Recomendación:</h4>
+                            <p id="texto-recomendacion"></p>
+                        </div>
+
+                        <div class="timestamp">
+                            <small>Evaluación realizada: <span id="timestamp"></span></small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button onclick="nuevaPrediccion()" class="btn btn-primary">Nueva Predicción</button>
+                    <button onclick="imprimirResultado()" class="btn btn-secondary">Imprimir</button>
+                </div>
+            </div>
+
+            <!-- Spinner de carga -->
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Procesando predicción...</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Ahorro Valle - Sistema de Predicción de Morosidad</p>
+            <p>Desarrollado para la evaluación crediticia automatizada</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

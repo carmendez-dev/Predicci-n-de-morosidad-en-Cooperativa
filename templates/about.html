@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de - Predicción de Morosidad</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Acerca del Sistema</h1>
+            <p class="subtitle">Información del Modelo y el Sistema</p>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="/">Predicción</a>
+            <a href="/estadisticas">Estadísticas</a>
+            <a href="/about" class="active">Acerca de</a>
+        </nav>
+
+        <main>
+            <div class="about-container">
+                <section class="info-section">
+                    <h2>Objetivo del Sistema</h2>
+                    <p>
+                        El Sistema de Predicción de Morosidad de Ahorro Valle utiliza técnicas avanzadas de 
+                        Machine Learning para evaluar el riesgo crediticio de los solicitantes de préstamos. 
+                        El sistema analiza múltiples variables para predecir la probabilidad de morosidad 
+                        en un período de 12 meses.
+                    </p>
+                </section>
+
+                <section class="info-section">
+                    <h2>Modelo de Machine Learning</h2>
+                    <div class="model-info">
+                        <p><strong>Modelo Activo:</strong> {{ modelo_nombre }}</p>
+                        <p><strong>Algoritmo:</strong> Regresión Logística (Optimizada)</p>
+                        <p><strong>Precisión:</strong> ~61.8% en conjunto de prueba</p>
+                        <p><strong>Recall (Detección de Morosos):</strong> ~56.4%</p>
+                        <p><strong>Specificity (Identificación de Buenos Clientes):</strong> ~62.9%</p>
+                    </div>
+                </section>
+
+                <section class="info-section">
+                    <h2>Variables Consideradas</h2>
+                    <div class="variables-grid">
+                        <div class="variable-category">
+                            <h3>Datos Personales</h3>
+                            <ul>
+                                <li>Edad</li>
+                                <li>Género</li>
+                                <li>Zona de residencia</li>
+                            </ul>
+                        </div>
+
+                        <div class="variable-category">
+                            <h3>Información Laboral</h3>
+                            <ul>
+                                <li>Tipo de empleo</li>
+                                <li>Antigüedad laboral</li>
+                                <li>Ingresos mensuales</li>
+                            </ul>
+                        </div>
+
+                        <div class="variable-category">
+                            <h3>Historial Crediticio</h3>
+                            <ul>
+                                <li>Score crediticio</li>
+                                <li>Pagos previos</li>
+                                <li>Créditos previos</li>
+                            </ul>
+                        </div>
+
+                        <div class="variable-category">
+                            <h3>Crédito Solicitado</h3>
+                            <ul>
+                                <li>Monto del crédito</li>
+                                <li>Plazo en meses</li>
+                                <li>Destino del crédito</li>
+                            </ul>
+                        </div>
+
+                        <div class="variable-category">
+                            <h3>Garantías</h3>
+                            <ul>
+                                <li>Tipo de garantía</li>
+                                <li>Valor de la garantía</li>
+                            </ul>
+                        </div>
+
+                        <div class="variable-category">
+                            <h3>Variables Económicas</h3>
+                            <ul>
+                                <li>Precio de la soya</li>
+                                <li>Precio del vino</li>
+                                <li>Productos bancarios usados</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="info-section">
+                    <h2>Proceso de Predicción</h2>
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Recolección de Datos</h4>
+                                <p>El usuario ingresa la información del solicitante a través del formulario web.</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Preprocesamiento</h4>
+                                <p>Los datos son validados, normalizados y transformados según el pipeline del modelo.</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Predicción</h4>
+                                <p>El modelo entrenado procesa los datos y genera una predicción de morosidad.</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Resultado y Recomendación</h4>
+                                <p>Se muestra la predicción con probabilidades, nivel de riesgo y recomendaciones.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="info-section">
+                    <h2>Clasificación de Riesgo</h2>
+                    <div class="risk-levels">
+                        <div class="risk-level low">
+                            <h4>Riesgo BAJO</h4>
+                            <p>Probabilidad de morosidad &lt; 20%</p>
+                        </div>
+                        <div class="risk-level medium">
+                            <h4>Riesgo MEDIO</h4>
+                            <p>Probabilidad de morosidad 20% - 50%</p>
+                        </div>
+                        <div class="risk-level high">
+                            <h4>Riesgo ALTO</h4>
+                            <p>Probabilidad de morosidad 50% - 70%</p>
+                        </div>
+                        <div class="risk-level very-high">
+                            <h4>Riesgo MUY ALTO</h4>
+                            <p>Probabilidad de morosidad &gt; 70%</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="info-section">
+                    <h2>Consideraciones Importantes</h2>
+                    <div class="warning-box">
+                        <ul>
+                            <li>Este sistema es una herramienta de apoyo a la decisión, no sustituye el criterio humano.</li>
+                            <li>Las predicciones tienen un margen de error y deben considerarse junto con otros factores.</li>
+                            <li>Se recomienda realizar evaluaciones adicionales para casos de alto monto o riesgo.</li>
+                            <li>El modelo debe ser reentrenado periódicamente con datos actualizados.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="info-section">
+                    <h2>Información Técnica</h2>
+                    <div class="tech-info">
+                        <p><strong>Framework Backend:</strong> Flask (Python)</p>
+                        <p><strong>Librería ML:</strong> Scikit-learn</p>
+                        <p><strong>Preprocesamiento:</strong> StandardScaler, OneHotEncoder</p>
+                        <p><strong>Validación:</strong> Validación cruzada estratificada (5-folds)</p>
+                        <p><strong>Optimización:</strong> RandomizedSearchCV</p>
+                        <p><strong>Versión del Modelo:</strong> {{ modelo_nombre }}</p>
+                    </div>
+                </section>
+
+                <div class="back-button">
+                    <a href="/" class="btn btn-primary">← Volver al Inicio</a>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Ahorro Valle - Sistema de Predicción de Morosidad</p>
+            <p>Desarrollado para EC2 - Modelado y Simulación de Sistemas</p>
+        </footer>
+    </div>
+</body>
+</html>

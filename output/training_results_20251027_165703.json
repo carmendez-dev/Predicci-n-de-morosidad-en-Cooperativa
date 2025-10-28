@@ -1,0 +1,131 @@
+{
+    "best_model_name": "Regresi\u00f3n Log\u00edstica (Optimizada)",
+    "timestamp": "20251027_165703",
+    "input_file": "dataset_credito_morosidad.csv",
+    "metrics_validation": {
+        "Regresi\u00f3n Log\u00edstica": {
+            "Accuracy": 0.6083333333333333,
+            "Precision": 0.22406639004149378,
+            "Recall": 0.5294117647058824,
+            "Specificity": 0.6244979919678715,
+            "F1-Score": 0.31486880466472306,
+            "ROC-AUC": 0.6254035750846523,
+            "True_Positives": 54.0,
+            "False_Positives": 187.0,
+            "False_Negatives": 48.0,
+            "True_Negatives": 311.0
+        },
+        "Random Forest": {
+            "Accuracy": 0.8316666666666667,
+            "Precision": 1.0,
+            "Recall": 0.00980392156862745,
+            "Specificity": 1.0,
+            "F1-Score": 0.019417475728155338,
+            "ROC-AUC": 0.6340066146940704,
+            "True_Positives": 1.0,
+            "False_Positives": 0.0,
+            "False_Negatives": 101.0,
+            "True_Negatives": 498.0
+        }
+    },
+    "metrics_test": {
+        "Regresi\u00f3n Log\u00edstica": {
+            "Accuracy": 0.6216666666666667,
+            "Precision": 0.24180327868852458,
+            "Recall": 0.5841584158415841,
+            "Specificity": 0.6292585170340681,
+            "F1-Score": 0.34202898550724636,
+            "ROC-AUC": 0.6524137383678248,
+            "True_Positives": 59.0,
+            "False_Positives": 185.0,
+            "False_Negatives": 42.0,
+            "True_Negatives": 314.0
+        },
+        "Random Forest": {
+            "Accuracy": 0.8316666666666667,
+            "Precision": 0.5,
+            "Recall": 0.009900990099009901,
+            "Specificity": 0.9979959919839679,
+            "F1-Score": 0.019417475728155338,
+            "ROC-AUC": 0.6866902121073831,
+            "True_Positives": 1.0,
+            "False_Positives": 1.0,
+            "False_Negatives": 100.0,
+            "True_Negatives": 498.0
+        }
+    },
+    "overfitting_analysis": {
+        "Regresi\u00f3n Log\u00edstica": {
+            "F1_Train": 0.3740831295843521,
+            "F1_Val": 0.31486880466472306,
+            "F1_Test": 0.34202898550724636,
+            "Acc_Train": 0.6342857142857142,
+            "Acc_Val": 0.6083333333333333,
+            "Acc_Test": 0.6216666666666667,
+            "Diff_Train_Val": 0.059214324919629024,
+            "Diff_Val_Test": -0.027160180842523307
+        },
+        "Random Forest": {
+            "F1_Train": 1.0,
+            "F1_Val": 0.019417475728155338,
+            "F1_Test": 0.019417475728155338,
+            "Acc_Train": 1.0,
+            "Acc_Val": 0.8316666666666667,
+            "Acc_Test": 0.8316666666666667,
+            "Diff_Train_Val": 0.9805825242718447,
+            "Diff_Val_Test": 0.0
+        }
+    },
+    "cross_validation": {
+        "Regresi\u00f3n Log\u00edstica": {
+            "accuracy_mean": 0.615,
+            "precision_mean": 0.2439304268270615,
+            "recall_mean": 0.6058170914542729,
+            "f1_mean": 0.3477157169352025,
+            "roc_auc_mean": 0.6627440735949104,
+            "accuracy_std": 0.01693157407602855,
+            "precision_std": 0.017968769935605037,
+            "recall_std": 0.04683063040125803,
+            "f1_std": 0.02528856355107201,
+            "roc_auc_std": 0.030014636120293193
+        },
+        "Random Forest": {
+            "accuracy_mean": 0.8302941176470588,
+            "precision_mean": 0.36666666666666664,
+            "recall_mean": 0.0052023988005997,
+            "f1_mean": 0.010227437346081416,
+            "roc_auc_mean": 0.6787974429044186,
+            "accuracy_std": 0.0007204381596421087,
+            "precision_std": 0.3711842908553348,
+            "recall_std": 0.004247829026402733,
+            "f1_std": 0.008350835160456925,
+            "roc_auc_std": 0.034948407941923276
+        }
+    },
+    "comparison": {
+        "Regresi\u00f3n Log\u00edstica": {
+            "Val_F1": 0.31486880466472306,
+            "Test_F1": 0.34202898550724636,
+            "Val_ROC_AUC": 0.6254035750846523,
+            "Test_ROC_AUC": 0.6524137383678248,
+            "Val_Recall": 0.5294117647058824,
+            "Test_Recall": 0.5841584158415841,
+            "Val_Precision": 0.22406639004149378,
+            "Test_Precision": 0.24180327868852458,
+            "Consistency": 0.027160180842523307,
+            "Score_Final": 0.5466513807973105
+        },
+        "Random Forest": {
+            "Val_F1": 0.019417475728155338,
+            "Test_F1": 0.019417475728155338,
+            "Val_ROC_AUC": 0.6340066146940704,
+            "Test_ROC_AUC": 0.6866902121073831,
+            "Val_Recall": 0.00980392156862745,
+            "Test_Recall": 0.009900990099009901,
+            "Val_Precision": 1.0,
+            "Test_Precision": 0.5,
+            "Consistency": 0.0,
+            "Score_Final": 0.31575425194327905
+        }
+    }
+}

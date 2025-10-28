@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Predicción de Morosidad</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .profile-card {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .profile-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left-color: #2ecc71;
+        }
+        .profile-card.low-risk {
+            border-left-color: #27ae60;
+        }
+        .profile-card.medium-risk {
+            border-left-color: #f39c12;
+        }
+        .profile-card.high-risk {
+            border-left-color: #e74c3c;
+        }
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .profile-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .profile-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .badge-low {
+            background: #27ae60;
+        }
+        .badge-medium {
+            background: #f39c12;
+        }
+        .badge-high {
+            background: #e74c3c;
+        }
+        .profile-details {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+        .btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+        }
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .action-buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Demo - Predicción de Morosidad</h1>
+        <p class="subtitle">Selecciona un perfil de cliente para probar la predicción</p>
+
+        <div class="info-box">
+            <strong>Instrucciones:</strong> Haz clic en cualquier perfil para cargar automáticamente sus datos en el formulario de predicción.
+        </div>
+
+        <!-- Perfil 1: Bajo Riesgo -->
+        <div class="profile-card low-risk" onclick="cargarPerfil(1)">
+            <div class="profile-header">
+                <div class="profile-title">Cliente Profesional - Juan Pérez</div>
+                <span class="profile-badge badge-low">BAJO RIESGO</span>
+            </div>
+            <div class="profile-details">
+                <strong>Perfil:</strong> Hombre, 45 años, Zona Urbana<br>
+                <strong>Empleo:</strong> Gobierno (20 años de antigüedad)<br>
+                <strong>Ingresos:</strong> $8,000.00 mensuales<br>
+                <strong>Score Crediticio:</strong> 810 (Excelente)<br>
+                <strong>Historial:</strong> 8 créditos previos, 5 pagos realizados<br>
+                <strong>Solicitud:</strong> $30,000 a 12 meses para Consumo<br>
+                <strong>Garantía:</strong> Inmueble valorado en $120,000
+            </div>
+        </div>
+
+        <!-- Perfil 2: Riesgo Medio -->
+        <div class="profile-card medium-risk" onclick="cargarPerfil(2)">
+            <div class="profile-header">
+                <div class="profile-title">Comerciante - Carlos Ramírez</div>
+                <span class="profile-badge badge-medium">RIESGO MEDIO</span>
+            </div>
+            <div class="profile-details">
+                <strong>Perfil:</strong> Hombre, 35 años, Zona Urbana<br>
+                <strong>Empleo:</strong> Dependiente (8 años de antigüedad)<br>
+                <strong>Ingresos:</strong> $4,500.00 mensuales<br>
+                <strong>Score Crediticio:</strong> 720 (Bueno)<br>
+                <strong>Historial:</strong> 2 créditos previos, 3 pagos realizados<br>
+                <strong>Solicitud:</strong> $50,000 a 24 meses para Consumo<br>
+                <strong>Garantía:</strong> Vehículo valorado en $55,000
+            </div>
+        </div>
+
+        <!-- Perfil 3: Alto Riesgo -->
+        <div class="profile-card high-risk" onclick="cargarPerfil(3)">
+            <div class="profile-header">
+                <div class="profile-title">Emprendedora - María González</div>
+                <span class="profile-badge badge-high">ALTO RIESGO</span>
+            </div>
+            <div class="profile-details">
+                <strong>Perfil:</strong> Mujer, 22 años, Zona Rural<br>
+                <strong>Empleo:</strong> Independiente (1 año de antigüedad)<br>
+                <strong>Ingresos:</strong> $2,000.00 mensuales<br>
+                <strong>Score Crediticio:</strong> 550 (Regular)<br>
+                <strong>Historial:</strong> Sin créditos ni pagos previos<br>
+                <strong>Solicitud:</strong> $80,000 a 48 meses para Comercial<br>
+                <strong>Garantía:</strong> Ninguna (solo $10,000 como respaldo)
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn" onclick="abrirFormulario()">Ir al Formulario Completo</button>
+            <button class="btn btn-secondary" onclick="abrirEstadisticas()">📊 Ver Estadísticas</button>
+        </div>
+
+        <div class="info-box" style="margin-top: 30px;">
+            <strong>Nota:</strong> Estos son perfiles de ejemplo diseñados para demostrar cómo el sistema evalúa diferentes niveles de riesgo crediticio. Los datos son ficticios y con fines ilustrativos.
+        </div>
+    </div>
+
+    <script>
+        const perfiles = {
+            1: { // Bajo Riesgo
+                edad: 45,
+                genero: "M",
+                zona: "Urbana",
+                tipo_empleo: "Gobierno",
+                antiguedad: 20,
+                ingresos: 8000.00,
+                score_crediticio: 810,
+                pagos_previos: 5,
+                creditos_previos: 8,
+                monto_credito: 30000,
+                plazo_meses: 12,
+                destino_credito: "Consumo",
+                tipo_garantia: "Inmueble",
+                valor_garantia: 120000.00,
+                precio_soya: 430.00,
+                precio_vino: 45.00,
+                uso_productos: 4
+            },
+            2: { // Riesgo Medio
+                edad: 35,
+                genero: "M",
+                zona: "Urbana",
+                tipo_empleo: "Dependiente",
+                antiguedad: 8,
+                ingresos: 4500.00,
+                score_crediticio: 720,
+                pagos_previos: 3,
+                creditos_previos: 2,
+                monto_credito: 50000,
+                plazo_meses: 24,
+                destino_credito: "Consumo",
+                tipo_garantia: "Vehiculo",
+                valor_garantia: 55000.00,
+                precio_soya: 420.50,
+                precio_vino: 48.00,
+                uso_productos: 2
+            },
+            3: { // Alto Riesgo
+                edad: 22,
+                genero: "F",
+                zona: "Rural",
+                tipo_empleo: "Independiente",
+                antiguedad: 1,
+                ingresos: 2000.00,
+                score_crediticio: 550,
+                pagos_previos: 0,
+                creditos_previos: 0,
+                monto_credito: 80000,
+                plazo_meses: 48,
+                destino_credito: "Comercial",
+                tipo_garantia: "Ninguna",
+                valor_garantia: 10000.00,
+                precio_soya: 380.00,
+                precio_vino: 55.00,
+                uso_productos: 0
+            }
+        };
+
+        function cargarPerfil(id) {
+            // Guardar datos en sessionStorage
+            sessionStorage.setItem('perfilPrecargado', JSON.stringify(perfiles[id]));
+            
+            // Redirigir al formulario
+            window.location.href = '/';
+        }
+
+        function abrirFormulario() {
+            window.location.href = '/';
+        }
+
+        function abrirEstadisticas() {
+            window.location.href = '/estadisticas';
+        }
+    </script>
+</body>
+</html>

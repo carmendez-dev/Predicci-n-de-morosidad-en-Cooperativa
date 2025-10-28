@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas - Predicción de Morosidad</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Estadísticas de Predicciones</h1>
+            <p class="subtitle">Panel de Control - Ahorro Valle</p>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="/">Predicción</a>
+            <a href="/estadisticas" class="active">Estadísticas</a>
+            <a href="/about">Acerca de</a>
+        </nav>
+
+        <main>
+            <div class="stats-container">
+                <h2>Resumen del Día</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"></div>
+                        <div class="stat-info">
+                            <h3 id="total-predicciones">0</h3>
+                            <p>Total Predicciones</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card green">
+                        <div class="stat-icon"></div>
+                        <div class="stat-info">
+                            <h3 id="no-morosos">0</h3>
+                            <p>No Morosos</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card red">
+                        <div class="stat-icon"></div>
+                        <div class="stat-info">
+                            <h3 id="morosos">0</h3>
+                            <p>Morosos</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card blue">
+                        <div class="stat-icon"></div>
+                        <div class="stat-info">
+                            <h3 id="prob-promedio">0%</h3>
+                            <p>Riesgo Promedio</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3>Distribución de Predicciones</h3>
+                    <canvas id="prediccionesChart"></canvas>
+                </div>
+
+                <div class="ultima-actualizacion">
+                    <p>Última predicción: <span id="ultima-prediccion">N/A</span></p>
+                    <button onclick="actualizarEstadisticas()" class="btn btn-primary">Actualizar</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Ahorro Valle - Sistema de Predicción de Morosidad</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/estadisticas.js') }}"></script>
+</body>
+</html>
