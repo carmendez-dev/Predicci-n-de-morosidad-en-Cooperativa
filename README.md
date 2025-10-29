@@ -25,6 +25,45 @@ Sistema web interactivo desarrollado para cooperativas financieras que permite e
 
 ---
 
+## Modelo de Machine Learning
+
+### Arquitectura del Modelo
+- **Algoritmo**: Regresión Logística con optimización de hiperparámetros
+- **Accuracy**: 61.8% en conjunto de prueba
+- **Pipeline**: Preprocesamiento + Imputación + Escalado + Encoding + Predicción
+- **Validación**: Cross-validation de 5 folds con optimización bayesiana
+
+### Variables de Entrada (17 features)
+
+#### Datos Personales
+- Edad del solicitante
+- Género
+- Zona de residencia (Urbana/Rural)
+
+#### Información Laboral
+- Tipo de empleo (Empleado/Independiente)
+- Antigüedad laboral (años)
+- Ingresos mensuales (COP)
+
+#### Detalles del Crédito
+- Monto solicitado (COP)
+- Plazo en meses
+- Destino del crédito
+
+#### Garantías
+- Tipo de garantía
+- Valor de la garantía (COP)
+
+#### Historial Crediticio
+- Credit Score (300-850)
+- Número de pagos anteriores
+- Número de créditos anteriores
+
+#### Variables Económicas
+- Precio de la soya
+- Precio del vino
+- Uso de productos financieros
+
 ## Tecnologías Utilizadas
 
 ### Backend
@@ -341,4 +380,8 @@ Este proyecto fue desarrollado con fines **académicos** para la materia de Mode
 
 **Si te gusta este proyecto, por favor dale una estrella en GitHub!**
 
+<<<<<<< HEAD
 **Desarrollado para la comunidad académica y financiera**
+=======
+**Desarrollado con ❤️ para la comunidad académica y financiera**
+>>>>>>> 47a078c7e685c062c34eb96395a9ea56f01b0451
