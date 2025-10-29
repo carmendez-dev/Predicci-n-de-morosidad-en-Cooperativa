@@ -22,10 +22,6 @@ Este sistema permite a los analistas de crédito evaluar automáticamente el rie
 - 📋 **Logging Completo**: Registro detallado de todas las predicciones
 - 🔒 **Validación Robusta**: Sistema de validación por capas (Frontend + Backend + ML)
 
-## 🚀 Demo en Vivo
-
-![Demo del Sistema](https://via.placeholder.com/800x400/1e293b/ffffff?text=Sistema+de+Predicción+de+Morosidad)
-
 ## 📊 Modelo de Machine Learning
 
 ### Arquitectura del Modelo
