@@ -200,44 +200,7 @@ function imprimirResultado() {
     window.print();
 }
 
-// Validación en tiempo real de campos numéricos
-document.addEventListener('DOMContentLoaded', function() {
-    // Score crediticio
-    const scoreInput = document.getElementById('score_crediticio');
-    if (scoreInput) {
-        scoreInput.addEventListener('input', function() {
-            if (this.value < 300) this.value = 300;
-            if (this.value > 850) this.value = 850;
-        });
-    }
-    
-    // Edad
-    const edadInput = document.getElementById('edad');
-    if (edadInput) {
-        edadInput.addEventListener('input', function() {
-            if (this.value < 18) this.value = 18;
-            if (this.value > 100) this.value = 100;
-        });
-    }
-    
-    // Antigüedad
-    const antiguedadInput = document.getElementById('antiguedad');
-    if (antiguedadInput) {
-        antiguedadInput.addEventListener('input', function() {
-            if (this.value < 0) this.value = 0;
-            if (this.value > 50) this.value = 50;
-        });
-    }
-    
-    // Uso de productos
-    const usoProductosInput = document.getElementById('uso_productos');
-    if (usoProductosInput) {
-        usoProductosInput.addEventListener('input', function() {
-            if (this.value < 0) this.value = 0;
-            if (this.value > 10) this.value = 10;
-        });
-    }
-});
+// Campos completamente libres - sin validaciones restrictivas
 
 // Formateo automático de montos
 function formatearMoneda(input) {
