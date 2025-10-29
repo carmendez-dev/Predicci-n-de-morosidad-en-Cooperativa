@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     cargarPerfilPrecargado();
 });
 
+// Función eliminada - los campos son ahora completamente libres
+
 function cargarPerfilPrecargado() {
     const perfilData = sessionStorage.getItem('perfilPrecargado');
     
@@ -45,7 +47,48 @@ function cargarPerfilPrecargado() {
 }
 
 
+function validarFormulario() {
+    // Campos que deben ser numéricos
+    const camposNumericos = [
+        'edad', 'antiguedad', 'ingresos', 'score_crediticio', 
+        'pagos_previos', 'creditos_previos', 'monto_credito', 
+        'valor_garantia', 'precio_soya', 'precio_vino', 'uso_productos'
+    ];
+    
+    let esValido = true;
+    
+    camposNumericos.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            const valor = parseFloat(input.value);
+            
+            // Limpiar estilos previos
+            input.style.borderColor = '';
+            
+            // Validaciones básicas solo al enviar
+            if (!input.value || input.value === '' || isNaN(valor)) {
+                input.style.borderColor = '#e74c3c';
+                esValido = false;
+            } else if (valor < 0) {
+                input.style.borderColor = '#e74c3c';
+                esValido = false;
+                alert(`El campo ${input.previousElementSibling.textContent} no puede ser negativo.`);
+            } else {
+                input.style.borderColor = '#27ae60';
+            }
+        }
+    });
+    
+    return esValido;
+}
+
 async function realizarPrediccion() {
+    // Validar formulario antes de enviar
+    if (!validarFormulario()) {
+        alert('Por favor, complete todos los campos numéricos con valores válidos (números positivos).');
+        return;
+    }
+    
     // Mostrar loading
     document.getElementById('loading').style.display = 'block';
     document.getElementById('resultado-container').style.display = 'none';

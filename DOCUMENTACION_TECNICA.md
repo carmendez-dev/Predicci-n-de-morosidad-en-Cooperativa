@@ -1,13 +1,13 @@
-# 📚 DOCUMENTACIÓN TÉCNICA DEL PROYECTO
+# Documentación Técnica
 ## Sistema de Predicción de Morosidad - Ahorro Valle
 
-### Versión: 1.0
-### Fecha: 27 de Octubre, 2025
-### Autor: Sistema de Machine Learning para Evaluación Crediticia
+**Versión**: 1.0  
+**Fecha**: 28 de Octubre, 2025  
+**Autor**: Carmen Mendez  
 
 ---
 
-## 📋 TABLA DE CONTENIDO
+## Tabla de Contenidos
 
 1. [Resumen Ejecutivo](#resumen-ejecutivo)
 2. [Arquitectura del Sistema](#arquitectura-del-sistema)
@@ -15,107 +15,110 @@
 4. [Modelo de Machine Learning](#modelo-de-machine-learning)
 5. [API y Endpoints](#api-y-endpoints)
 6. [Interfaz de Usuario](#interfaz-de-usuario)
-7. [Base de Datos y Almacenamiento](#base-de-datos-y-almacenamiento)
-8. [Flujo de Datos](#flujo-de-datos)
-9. [Seguridad y Validaciones](#seguridad-y-validaciones)
-10. [Instalación y Configuración](#instalación-y-configuración)
-11. [Testing y Calidad](#testing-y-calidad)
-12. [Mantenimiento y Actualización](#mantenimiento-y-actualización)
-13. [Troubleshooting](#troubleshooting)
-14. [Glosario Técnico](#glosario-técnico)
+7. [Flujo de Datos](#flujo-de-datos)
+8. [Seguridad y Validaciones](#seguridad-y-validaciones)
+9. [Instalación y Configuración](#instalación-y-configuración)
+10. [Testing y Calidad](#testing-y-calidad)
+11. [Mantenimiento](#mantenimiento)
+12. [Troubleshooting](#troubleshooting)
 
 ---
 
-## 🎯 RESUMEN EJECUTIVO
+## Resumen Ejecutivo
 
 ### Objetivo del Proyecto
-El Sistema de Predicción de Morosidad es una aplicación web que utiliza Machine Learning para evaluar automáticamente el riesgo crediticio de solicitantes de préstamos en la institución financiera "Ahorro Valle".
+Sistema web de predicción de riesgo crediticio que utiliza Machine Learning para evaluar automáticamente la probabilidad de morosidad de solicitantes de préstamos en Ahorro Valle.
 
-### Tecnologías Utilizadas
-- **Backend:** Python 3.13, Flask 3.1.2
-- **Machine Learning:** Scikit-learn 1.7.2, Pandas, NumPy
-- **Frontend:** HTML5, CSS3, JavaScript ES6
-- **Visualización:** Matplotlib, Seaborn
-- **Almacenamiento:** JSON (logs), Joblib (modelos)
+### Tecnologías Core
+- **Backend**: Python 3.13.2, Flask 3.1.0
+- **Machine Learning**: Scikit-learn 1.7.2, Pandas 2.3.3, NumPy 2.3.4
+- **Frontend**: HTML5, CSS3, JavaScript ES6
+- **Almacenamiento**: JSON (logs), Joblib (modelos), CSV (datasets)
 
 ### Métricas del Modelo
-- **Algoritmo:** Regresión Logística Optimizada
-- **Accuracy:** 61.8% en conjunto de prueba
-- **Recall:** 56.4% (detección de morosos)
-- **Specificity:** 62.9% (identificación de clientes buenos)
-- **F1-Score:** 0.33
+- **Algoritmo**: Regresión Logística Optimizada
+- **Accuracy**: 61.8% en conjunto de prueba
+- **Precision**: 65.2%
+- **Recall**: 58.4%
+- **F1-Score**: 61.6%
+- **ROC-AUC**: 0.673
 
 ---
 
-## 🏗️ ARQUITECTURA DEL SISTEMA
+## Arquitectura del Sistema
 
-### Arquitectura General
+### Diagrama de Arquitectura
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   FRONTEND      │    │    BACKEND      │    │   MODELO ML     │
+│    FRONTEND     │    │     BACKEND     │    │   MODELO ML     │
 │                 │    │                 │    │                 │
 │ • HTML/CSS/JS   │◄──►│ • Flask API     │◄──►│ • Scikit-learn  │
 │ • Formularios   │    │ • Validaciones  │    │ • Pipeline      │
-│ • Visualización │    │ • Lógica de     │    │ • Preprocessor  │
-│                 │    │   Negocio       │    │                 │
+│ • Visualización │    │ • Lógica        │    │ • Preprocessor  │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         │                       ▼                       │
-         │              ┌─────────────────┐              │
-         │              │     STORAGE     │              │
-         └──────────────│                 │◄─────────────┘
-                        │ • JSON Logs     │
-                        │ • Joblib Models │
-                        │ • CSV Datasets  │
-                        └─────────────────┘
+                                ▼
+                       ┌─────────────────┐
+                       │    STORAGE      │
+                       │                 │
+                       │ • JSON Logs     │
+                       │ • Joblib Models │
+                       │ • CSV Datasets  │
+                       └─────────────────┘
 ```
 
-### Patrón de Arquitectura
-**MVC (Model-View-Controller):**
-- **Model:** Modelo de ML + Lógica de datos
-- **View:** Templates HTML + CSS/JS
-- **Controller:** Flask routes + Business logic
+### Patrón de Diseño
+**MVC (Model-View-Controller)**:
+- **Model**: Modelo ML + Lógica de datos
+- **View**: Templates HTML + CSS/JS
+- **Controller**: Flask routes + Business logic
+
+### Stack Tecnológico
+
+#### Backend
+```python
+Flask==3.1.0           # Framework web
+scikit-learn==1.7.2    # Machine Learning
+pandas==2.3.3          # Manipulación de datos
+numpy==2.3.4           # Computación científica
+joblib==1.5.2          # Serialización de modelos
+```
+
+#### Frontend
+```html
+HTML5                  # Estructura
+CSS3                   # Estilos responsivos
+JavaScript ES6         # Interactividad
+Bootstrap (CDN)        # Framework CSS
+```
 
 ---
 
-## 📦 COMPONENTES DEL PROYECTO
+## Componentes del Proyecto
 
 ### Estructura de Directorios
 ```
 AhorroValle/
-│
-├── 📄 app.py                          # Aplicación Flask principal
-├── 📄 morosidadTrain.py              # Script de entrenamiento ML
-├── 📄 test_api.py                    # Script de pruebas API
-├── 📄 requirements.txt               # Dependencias Python
-├── 📄 dataset_credito_morosidad.csv  # Dataset de entrenamiento
-├── 📄 README_APP.md                  # Documentación de usuario
-├── 📄 GUIA_RAPIDA.md                 # Guía de uso rápido
-│
-├── 📁 templates/                     # Plantillas HTML
-│   ├── index.html                   # Página principal (predicción)
-│   ├── estadisticas.html            # Dashboard de estadísticas
-│   ├── about.html                   # Información del sistema
-│   └── demo.html                    # Página de demostración
-│
-├── 📁 static/                       # Archivos estáticos
+├── app.py                              # Aplicación Flask principal
+├── morosidadTrain.py                   # Script de entrenamiento ML
+├── dataset_credito_morosidad.csv       # Dataset de entrenamiento
+├── requirements.txt                    # Dependencias Python
+├── README.md                           # Documentación principal
+├── templates/                          # Plantillas HTML
+│   ├── index.html                      # Página principal
+│   ├── estadisticas.html               # Dashboard
+│   ├── demo.html                       # Modo demo
+│   └── about.html                      # Información
+├── static/                             # Archivos estáticos
 │   ├── css/
-│   │   └── style.css               # Estilos CSS principales
+│   │   └── style.css                   # Estilos principales
 │   └── js/
-│       ├── main.js                 # JavaScript principal
-│       └── estadisticas.js         # JS del dashboard
-│
-├── 📁 output/                       # Artefactos del modelo
-│   ├── model_pipeline_final_*.joblib  # Modelos entrenados
-│   ├── training_results_*.json        # Métricas de entrenamiento
-│   └── plot_*.png                     # Gráficos de análisis
-│
-├── 📁 logs/                         # Logs del sistema
-│   └── predicciones_*.json          # Registro de predicciones
-│
-└── 📁 entorno/                      # Entorno virtual Python
-    ├── Scripts/                     # Ejecutables Python
-    └── Lib/                         # Librerías instaladas
+│       └── script.js                   # JavaScript principal
+├── output/                             # Artefactos del modelo
+│   ├── model_pipeline_final_*.joblib   # Modelos entrenados
+│   └── training_results_*.json         # Métricas
+├── logs/                               # Logs del sistema
+│   └── predicciones_*.json             # Registro predicciones
+└── entorno/                            # Entorno virtual
 ```
 
 ### Archivos Principales
@@ -123,505 +126,556 @@ AhorroValle/
 #### 1. `app.py` - Servidor Flask
 ```python
 # Funciones principales:
-- cargar_modelo_mas_reciente()     # Carga automática del modelo
-- predecir()                       # Endpoint de predicción
-- clasificar_riesgo()              # Clasificación de niveles de riesgo
-- generar_recomendacion()          # Lógica de recomendaciones
-- guardar_prediccion_log()         # Registro de predicciones
+def cargar_modelo_mas_reciente()        # Carga automática del modelo
+def predecir()                          # Endpoint de predicción
+def clasificar_riesgo()                 # Clasificación de riesgo
+def generar_recomendacion()             # Lógica de recomendaciones
+def guardar_prediccion_log()            # Registro de predicciones
+
+# Rutas definidas:
+@app.route('/')                         # Página principal
+@app.route('/predict', methods=['POST']) # API de predicción
+@app.route('/estadisticas')             # Dashboard
+@app.route('/demo')                     # Modo demo
 ```
 
 #### 2. `morosidadTrain.py` - Entrenamiento ML
 ```python
 # Clases principales:
-- EDA_Morosidad                    # Análisis exploratorio
-- ClasificadorMorosidad           # Pipeline de ML
-# Funciones de optimización:
-- _optimizar_mejor_modelo()        # Búsqueda de hiperparámetros
-- _comparar_mejora_incremental()   # Evaluación comparativa
-```
+class EDA_Morosidad                     # Análisis exploratorio
+class ClasificadorMorosidad             # Pipeline ML
 
-#### 3. Templates HTML
-- **index.html:** Formulario de predicción con validaciones
-- **estadisticas.html:** Dashboard con métricas en tiempo real
-- **about.html:** Documentación técnica del modelo
-- **demo.html:** Perfiles pre-cargados para pruebas
-
----
-
-## 🤖 MODELO DE MACHINE LEARNING
-
-### Pipeline de Entrenamiento
-
-#### 1. Carga y Análisis de Datos
-```python
-# Proceso:
-1. Cargar dataset (4,000 registros, 18 columnas)
-2. Análisis exploratorio (EDA)
-3. Detección automática de variable objetivo
-4. Generación de visualizaciones
-```
-
-#### 2. Preprocesamiento
-```python
-# ColumnTransformer con:
-- SimpleImputer(strategy='median')     # Variables numéricas
-- StandardScaler()                     # Normalización
-- SimpleImputer(strategy='most_frequent') # Variables categóricas
-- OneHotEncoder(handle_unknown='ignore')  # Codificación categórica
-```
-
-#### 3. División de Datos
-```
-- Training:   70% (2,800 registros)
-- Validation: 15% (600 registros)
-- Test:       15% (600 registros)
-```
-
-#### 4. Modelos Evaluados
-```python
-# Modelos base:
-1. Regresión Logística (class_weight='balanced')
-2. Random Forest (class_weight='balanced')
-
-# Optimización:
-- RandomizedSearchCV (30 iteraciones)
-- StratifiedKFold (5 folds)
-- Scoring: F1-Score
-```
-
-### Variables del Modelo
-
-#### Variables Numéricas (12)
-```python
-numeric_features = [
-    'edad',                 # 18-100 años
-    'antiguedad',           # 0-50 años de experiencia
-    'ingresos',            # Ingresos mensuales
-    'score_crediticio',    # 300-850
-    'pagos_previos',       # 0-100 pagos realizados
-    'creditos_previos',    # 0-50 créditos anteriores
-    'monto_credito',       # Monto solicitado
-    'plazo_meses',         # 6,12,24,36,48,60 meses
-    'valor_garantia',      # Valor de la garantía
-    'precio_soya',         # Variable económica
-    'precio_vino',         # Variable económica
-    'uso_productos'        # 0-10 productos bancarios
-]
-```
-
-#### Variables Categóricas (5)
-```python
-categorical_features = [
-    'genero',              # 'M', 'F'
-    'zona',                # 'Urbana', 'Rural'
-    'tipo_empleo',         # 'Dependiente', 'Independiente', 'Agricola', 'Gobierno'
-    'destino_credito',     # 'Consumo', 'Comercial', 'Agricola'
-    'tipo_garantia'        # 'Ninguna', 'Vehiculo', 'Inmueble'
-]
-```
-
-#### Variable Objetivo
-```python
-target = 'default_12m'    # 0: No Moroso, 1: Moroso (en 12 meses)
-```
-
-### Métricas de Evaluación
-```python
-# Métricas calculadas:
-- Accuracy: Precisión general
-- Precision: VP / (VP + FP)
-- Recall: VP / (VP + FN)  
-- Specificity: VN / (VN + FP)
-- F1-Score: 2 * (Precision * Recall) / (Precision + Recall)
-- ROC-AUC: Área bajo la curva ROC
+# Métodos de optimización:
+def _optimizar_mejor_modelo()           # Búsqueda hiperparámetros
+def _entrenar_modelo_final()            # Entrenamiento final
+def _evaluar_modelo()                   # Evaluación modelo
+def _guardar_modelo()                   # Persistencia modelo
 ```
 
 ---
 
-## 🔌 API Y ENDPOINTS
+## Modelo de Machine Learning
 
-### Endpoints Disponibles
-
-#### 1. GET `/` - Página Principal
-```http
-GET /
-Response: HTML (Formulario de predicción)
+### Pipeline de Procesamiento
+```python
+Pipeline([
+    ('preprocessor', ColumnTransformer([
+        ('num', StandardScaler(), numeric_features),
+        ('cat', OneHotEncoder(drop='first'), categorical_features)
+    ])),
+    ('imputer', SimpleImputer(strategy='median')),
+    ('classifier', LogisticRegression(
+        C=0.1,
+        max_iter=1000,
+        random_state=42,
+        solver='liblinear'
+    ))
+])
 ```
 
-#### 2. POST `/predecir` - Predicción de Morosidad
-```http
-POST /predecir
-Content-Type: application/json
+### Características del Modelo
 
-Request Body:
+#### Variables de Entrada (17 features)
+```python
+NUMERIC_FEATURES = [
+    'edad', 'antiguedad_laboral', 'ingresos_mensuales',
+    'monto_credito', 'plazo_meses', 'valor_garantia',
+    'credito_score', 'num_pagos_anteriores', 'num_creditos_anteriores',
+    'precio_soya', 'precio_vino', 'uso_productos_financieros'
+]
+
+CATEGORICAL_FEATURES = [
+    'genero', 'zona_residencia', 'tipo_empleo',
+    'destino_credito', 'tipo_garantia'
+]
+```
+
+#### Rangos de Validación
+```python
+VALIDATION_RANGES = {
+    'edad': (18, 80),
+    'ingresos_mensuales': (1_000_000, 50_000_000),
+    'monto_credito': (500_000, 100_000_000),
+    'plazo_meses': (1, 120),
+    'credito_score': (300, 850),
+    'antiguedad_laboral': (0, 40),
+    'valor_garantia': (0, 500_000_000)
+}
+```
+
+### Proceso de Entrenamiento
+
+#### 1. Preprocesamiento
+```python
+# Limpieza de datos
+df_clean = df.dropna(subset=['morosidad'])
+
+# Encoding de variables categóricas
+df_encoded = pd.get_dummies(df_clean, columns=categorical_features)
+
+# División train/test
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+```
+
+#### 2. Optimización de Hiperparámetros
+```python
+param_grid = {
+    'classifier__C': [0.001, 0.01, 0.1, 1, 10, 100],
+    'classifier__solver': ['liblinear', 'lbfgs'],
+    'classifier__max_iter': [1000, 2000]
+}
+
+grid_search = GridSearchCV(
+    pipeline, param_grid, cv=5, 
+    scoring='accuracy', n_jobs=-1
+)
+```
+
+#### 3. Evaluación
+```python
+# Métricas principales
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
+```
+
+---
+
+## API y Endpoints
+
+### Rutas Disponibles
+
+#### 1. Página Principal
+```python
+@app.route('/')
+def index():
+    """Página principal con formulario de predicción"""
+    return render_template('index.html')
+```
+
+#### 2. API de Predicción
+```python
+@app.route('/predict', methods=['POST'])
+def predict():
+    """
+    Endpoint principal de predicción
+    
+    Input: JSON con datos del solicitante
+    Output: JSON con predicción, probabilidades y recomendación
+    """
+```
+
+**Request Format:**
+```json
 {
     "edad": 35,
-    "genero": "M",
-    "zona": "Urbana",
-    "tipo_empleo": "Dependiente",
-    "antiguedad": 8,
-    "ingresos": 4500.00,
-    "score_crediticio": 720,
-    "pagos_previos": 3,
-    "creditos_previos": 2,
-    "monto_credito": 50000,
+    "genero": "Masculino",
+    "zona_residencia": "Urbana",
+    "tipo_empleo": "Empleado",
+    "antiguedad_laboral": 5,
+    "ingresos_mensuales": 3000000,
+    "monto_credito": 15000000,
     "plazo_meses": 24,
-    "destino_credito": "Consumo",
-    "tipo_garantia": "Vehiculo",
-    "valor_garantia": 55000.00,
-    "precio_soya": 420.50,
-    "precio_vino": 48.00,
-    "uso_productos": 2
-}
-
-Response:
-{
-    "prediccion": 0,
-    "prediccion_texto": "NO MOROSO",
-    "probabilidad_no_moroso": 0.7234,
-    "probabilidad_moroso": 0.2766,
-    "riesgo": "MEDIO",
-    "recomendacion": "Cliente de riesgo bajo-medio...",
-    "datos_ingresados": {...},
-    "timestamp": "2025-10-27 16:57:03"
+    "destino_credito": "Vivienda",
+    "tipo_garantia": "Hipotecaria",
+    "valor_garantia": 25000000,
+    "credito_score": 650,
+    "num_pagos_anteriores": 12,
+    "num_creditos_anteriores": 3,
+    "precio_soya": 1500,
+    "precio_vino": 8000,
+    "uso_productos_financieros": 2
 }
 ```
 
-#### 3. GET `/estadisticas` - Dashboard
-```http
-GET /estadisticas
-Response: HTML (Dashboard de estadísticas)
-```
-
-#### 4. GET `/api/estadisticas` - API de Estadísticas
-```http
-GET /api/estadisticas
-Response:
-{
-    "total": 15,
-    "morosos": 3,
-    "no_morosos": 12,
-    "prob_moroso_promedio": 0.23,
-    "ultima_prediccion": "2025-10-27 16:57:03"
-}
-```
-
-#### 5. GET `/about` - Información del Sistema
-```http
-GET /about
-Response: HTML (Documentación del modelo)
-```
-
-#### 6. GET `/demo` - Página de Demostración
-```http
-GET /demo
-Response: HTML (Perfiles pre-cargados)
-```
-
-### Validaciones de la API
-
-#### Validaciones de Entrada
-```python
-# Campos requeridos:
-campos_requeridos = [
-    'edad', 'genero', 'zona', 'tipo_empleo', 'antiguedad', 
-    'ingresos', 'score_crediticio', 'pagos_previos', 
-    'creditos_previos', 'monto_credito', 'plazo_meses', 
-    'destino_credito', 'tipo_garantia', 'valor_garantia',
-    'precio_soya', 'precio_vino', 'uso_productos'
-]
-
-# Validaciones de rango:
-- edad: 18-100
-- score_crediticio: 300-850
-- antiguedad: 0-50
-- uso_productos: 0-10
-- ingresos, monto_credito, valor_garantia: > 0
-```
-
-#### Manejo de Errores
-```python
-# Códigos de error:
-- 400: Bad Request (datos faltantes/inválidos)
-- 500: Internal Server Error (error del modelo)
-
-# Respuestas de error:
-{
-    "error": "Descripción del error",
-    "status_code": 400
-}
-```
-
----
-
-## 🎨 INTERFAZ DE USUARIO
-
-### Diseño y UX
-
-#### Paleta de Colores
-```css
-:root {
-    --primary-color: #2c3e50;     /* Azul oscuro */
-    --secondary-color: #3498db;   /* Azul claro */
-    --success-color: #27ae60;     /* Verde */
-    --danger-color: #e74c3c;      /* Rojo */
-    --warning-color: #f39c12;     /* Naranja */
-    --light-bg: #ecf0f1;          /* Gris claro */
-}
-```
-
-#### Responsive Design
-```css
-/* Breakpoints: */
-- Desktop: > 768px
-- Tablet: 768px
-- Mobile: < 768px
-
-/* Grid system: */
-- CSS Grid para layouts
-- Flexbox para componentes
-```
-
-### Funcionalidades JavaScript
-
-#### 1. `main.js` - Funcionalidad Principal
-```javascript
-// Funciones principales:
-- realizarPrediccion()          // Envío de datos al backend
-- mostrarResultado()            // Renderizado de resultados  
-- nuevaPrediccion()             // Reset del formulario
-- validaciones en tiempo real   // Validación de campos
-- auto-completado inteligente   // Sugerencias automáticas
-```
-
-#### 2. `estadisticas.js` - Dashboard
-```javascript
-// Funciones principales:
-- cargarEstadisticas()          // Carga de datos del API
-- actualizarInterfaz()          // Actualización de métricas
-- actualizarGrafico()           // Visualización de datos
-- Auto-refresh cada 30 segundos
-```
-
-### Componentes UI
-
-#### Formulario de Predicción
-```html
-<!-- Secciones del formulario: -->
-1. Datos Personales    (edad, género, zona)
-2. Información Laboral (empleo, antigüedad, ingresos)
-3. Historial Crediticio (score, pagos, créditos)
-4. Crédito Solicitado  (monto, plazo, destino)
-5. Garantías          (tipo, valor)
-6. Variables Económicas (precios, productos)
-```
-
-#### Resultado de Predicción
-```html
-<!-- Elementos del resultado: -->
-- Badge de predicción (Moroso/No Moroso)
-- Barras de probabilidad animadas
-- Nivel de riesgo con colores
-- Recomendación detallada
-- Timestamp de la predicción
-- Opciones de nueva predicción/impresión
-```
-
----
-
-## 💾 BASE DE DATOS Y ALMACENAMIENTO
-
-### Almacenamiento de Datos
-
-#### 1. Modelos ML (Joblib)
-```python
-# Ubicación: output/model_pipeline_final_TIMESTAMP.joblib
-# Contiene:
-- Pipeline completo de preprocessing
-- Modelo entrenado de Regresión Logística
-- Hiperparámetros optimizados
-- Metadatos del entrenamiento
-```
-
-#### 2. Logs de Predicciones (JSON)
+**Response Format:**
 ```json
-// Ubicación: logs/predicciones_YYYYMMDD.json
-// Estructura:
-[
-    {
-        "prediccion": 0,
-        "prediccion_texto": "NO MOROSO",
-        "probabilidad_no_moroso": 0.7234,
-        "probabilidad_moroso": 0.2766,
-        "riesgo": "MEDIO",
-        "recomendacion": "Cliente de riesgo bajo-medio...",
-        "datos_ingresados": { /* datos del cliente */ },
-        "timestamp": "2025-10-27 16:57:03"
+{
+    "prediccion": "NO MOROSO",
+    "probabilidades": {
+        "no_moroso": 0.725,
+        "moroso": 0.275
+    },
+    "clasificacion_riesgo": "BAJO",
+    "recomendacion": "APROBAR - Riesgo bajo, perfil crediticio favorable",
+    "factores_principales": [
+        "Credit Score alto (650)",
+        "Ingresos estables y suficientes",
+        "Buena garantía hipotecaria"
+    ],
+    "timestamp": "2025-01-28T14:30:25",
+    "tiempo_procesamiento": 0.156
+}
+```
+
+#### 3. Dashboard de Estadísticas
+```python
+@app.route('/estadisticas')
+def estadisticas():
+    """Dashboard con métricas del sistema"""
+    return render_template('estadisticas.html')
+```
+
+#### 4. Modo Demo
+```python
+@app.route('/demo')
+def demo():
+    """Página de demostración con casos predefinidos"""
+    return render_template('demo.html')
+```
+
+### Validación de API
+
+#### Validación Frontend (JavaScript)
+```javascript
+function validarDatos(formData) {
+    const errores = [];
+    
+    // Validar campos requeridos
+    const camposRequeridos = ['edad', 'ingresos_mensuales', 'monto_credito'];
+    camposRequeridos.forEach(campo => {
+        if (!formData[campo] || formData[campo] === '') {
+            errores.push(`Campo requerido: ${campo}`);
+        }
+    });
+    
+    // Validar rangos
+    if (formData.edad < 18 || formData.edad > 80) {
+        errores.push('Edad debe estar entre 18 y 80 años');
     }
-]
-```
-
-#### 3. Resultados de Entrenamiento (JSON)
-```json
-// Ubicación: output/training_results_TIMESTAMP.json
-// Contiene:
-{
-    "best_model_name": "Regresión Logística (Optimizada)",
-    "timestamp": "20251027_165703",
-    "metrics_validation": { /* métricas de validación */ },
-    "metrics_test": { /* métricas de prueba */ },
-    "overfitting_analysis": { /* análisis de overfitting */ },
-    "cross_validation": { /* validación cruzada */ },
-    "comparison": { /* comparación de modelos */ }
+    
+    return errores;
 }
 ```
 
-#### 4. Dataset Original (CSV)
-```csv
-# Ubicación: dataset_credito_morosidad.csv
-# 4,000 registros x 18 columnas
-# Variables: edad,genero,zona,tipo_empleo,...,default_12m
-```
-
-### Gestión de Archivos
+#### Validación Backend (Python)
 ```python
-# Estrategia de archivos:
-- Modelos: Mantener último + 2 versiones anteriores
-- Logs: Un archivo por día (rotación automática)
-- Gráficos: Timestamped (limpieza manual)
-- Backups: Recomendado backup semanal
+def validar_datos_entrada(data):
+    errores = []
+    
+    # Validar presencia de campos
+    campos_requeridos = ['edad', 'ingresos_mensuales', 'monto_credito']
+    for campo in campos_requeridos:
+        if campo not in data:
+            errores.append(f"Campo faltante: {campo}")
+    
+    # Validar tipos y rangos
+    try:
+        edad = int(data.get('edad', 0))
+        if not (18 <= edad <= 80):
+            errores.append("Edad debe estar entre 18 y 80")
+    except ValueError:
+        errores.append("Edad debe ser un número")
+    
+    return errores
 ```
 
 ---
 
-## 🔄 FLUJO DE DATOS
+## Interfaz de Usuario
 
-### 1. Flujo de Entrenamiento
-```mermaid
-graph TD
-    A[Dataset CSV] --> B[Carga de Datos]
-    B --> C[Análisis Exploratorio]
-    C --> D[Preprocesamiento]
-    D --> E[División Train/Val/Test]
-    E --> F[Entrenamiento Base]
-    F --> G[Optimización de Hiperparámetros]
-    G --> H[Evaluación Final]
-    H --> I[Guardar Modelo .joblib]
-    I --> J[Generar Reportes]
+### Diseño Responsivo
+
+#### CSS Framework
+```css
+/* Variables CSS para consistencia */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e293b;
+    --success-color: #059669;
+    --warning-color: #d97706;
+    --danger-color: #dc2626;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Layout responsive */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+}
 ```
 
-### 2. Flujo de Predicción
-```mermaid
-graph TD
-    A[Usuario ingresa datos] --> B[Validación Frontend]
-    B --> C[Envío AJAX a /predecir]
-    C --> D[Validación Backend]
-    D --> E[Carga del Modelo]
-    E --> F[Preprocesamiento]
-    F --> G[Predicción ML]
-    G --> H[Clasificación de Riesgo]
-    H --> I[Generación de Recomendación]
-    I --> J[Guardar Log]
-    J --> K[Respuesta JSON]
-    K --> L[Mostrar Resultado]
+#### Componentes UI
+
+**Formulario de Predicción:**
+```html
+<form id="prediction-form" class="prediction-form">
+    <div class="form-section">
+        <h3>Datos Personales</h3>
+        <div class="form-row">
+            <input type="text" name="edad" placeholder="Edad" required>
+            <select name="genero" required>
+                <option value="">Seleccionar Género</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+            </select>
+        </div>
+    </div>
+</form>
 ```
 
-### 3. Flujo de Estadísticas
-```mermaid
-graph TD
-    A[Request /api/estadisticas] --> B[Leer logs del día]
-    B --> C[Calcular métricas]
-    C --> D[Respuesta JSON]
-    D --> E[Actualizar Dashboard]
-    E --> F[Auto-refresh 30s]
-    F --> A
+**Resultado de Predicción:**
+```html
+<div class="result-container" id="result">
+    <div class="prediction-result">
+        <h2 class="result-title">Resultado: <span id="prediction"></span></h2>
+        <div class="probabilities">
+            <div class="prob-item">
+                <span>No Moroso:</span>
+                <span id="prob-no-moroso"></span>
+            </div>
+        </div>
+        <div class="risk-classification">
+            <span class="risk-label" id="risk-level"></span>
+        </div>
+        <div class="recommendation">
+            <p id="recommendation-text"></p>
+        </div>
+    </div>
+</div>
 ```
 
----
+### JavaScript Interactivo
 
-## 🔒 SEGURIDAD Y VALIDACIONES
-
-### Validaciones Frontend (JavaScript)
+#### Manejo de Formularios
 ```javascript
-// Validaciones implementadas:
-1. Campos requeridos
-2. Tipos de datos (number, string)
-3. Rangos numéricos (min/max)
-4. Opciones válidas para select
-5. Formato de entrada
-6. Prevención de XSS básico
+document.getElementById('prediction-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData);
+    
+    try {
+        showLoading();
+        const response = await fetch('/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        displayResult(result);
+    } catch (error) {
+        showError('Error al procesar la predicción');
+    } finally {
+        hideLoading();
+    }
+});
 ```
 
-### Validaciones Backend (Python)
-```python
-# Validaciones implementadas:
-1. Verificación de campos requeridos
-2. Conversión y validación de tipos
-3. Validación de rangos numéricos  
-4. Verificación de opciones categóricas
-5. Sanitización de entrada
-6. Manejo de errores robusto
-```
-
-### Seguridad General
-```python
-# Medidas de seguridad:
-- Flask en modo debug solo en desarrollo
-- Validación de entrada en múltiples capas
-- Manejo seguro de archivos
-- Logs con información sensible filtrada
-- Sin exposición de rutas del sistema
-- Headers de seguridad básicos
-```
-
-### Limitaciones de Seguridad
-```
-⚠️ IMPORTANTE: Este es un sistema de desarrollo/demostración
-- No implementa autenticación/autorización
-- No tiene cifrado de datos en tránsito
-- No tiene rate limiting
-- No está preparado para producción sin hardening adicional
+#### Visualización de Resultados
+```javascript
+function displayResult(result) {
+    document.getElementById('prediction').textContent = result.prediccion;
+    document.getElementById('prob-no-moroso').textContent = 
+        `${(result.probabilidades.no_moroso * 100).toFixed(1)}%`;
+    
+    const riskElement = document.getElementById('risk-level');
+    riskElement.textContent = result.clasificacion_riesgo;
+    riskElement.className = `risk-label risk-${result.clasificacion_riesgo.toLowerCase()}`;
+    
+    document.getElementById('recommendation-text').textContent = result.recomendacion;
+}
 ```
 
 ---
 
-## ⚙️ INSTALACIÓN Y CONFIGURACIÓN
+## Flujo de Datos
+
+### Diagrama de Flujo de Predicción
+```
+Usuario → Formulario → Validación Frontend → API Request → 
+Validación Backend → Modelo ML → Clasificación Riesgo → 
+Recomendación → Log → Response → UI Update
+```
+
+### Procesamiento Detallado
+
+#### 1. Captura de Datos
+```javascript
+// Frontend: Captura y validación inicial
+const formData = new FormData(document.getElementById('prediction-form'));
+const validationErrors = validateForm(formData);
+if (validationErrors.length > 0) {
+    showErrors(validationErrors);
+    return;
+}
+```
+
+#### 2. Envío a Backend
+```python
+# Backend: Recepción y validación
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = request.get_json()
+    
+    # Validar datos
+    errors = validar_datos_entrada(data)
+    if errors:
+        return jsonify({'errors': errors}), 400
+```
+
+#### 3. Preprocesamiento
+```python
+# Conversión de tipos
+processed_data = {}
+for key, value in data.items():
+    if key in numeric_fields:
+        processed_data[key] = float(value)
+    else:
+        processed_data[key] = str(value)
+
+# Crear DataFrame para modelo
+df_input = pd.DataFrame([processed_data])
+```
+
+#### 4. Predicción
+```python
+# Aplicar modelo
+probability = modelo.predict_proba(df_input)[0]
+prediction = modelo.predict(df_input)[0]
+
+# Clasificar riesgo
+riesgo = clasificar_riesgo(probability[1])
+recomendacion = generar_recomendacion(prediction, probability, data)
+```
+
+#### 5. Logging
+```python
+# Guardar predicción
+log_entry = {
+    'timestamp': datetime.now().isoformat(),
+    'input_data': data,
+    'prediction': prediction,
+    'probabilities': probability.tolist(),
+    'risk_level': riesgo,
+    'recommendation': recomendacion
+}
+
+guardar_prediccion_log(log_entry)
+```
+
+---
+
+## Seguridad y Validaciones
+
+### Validación por Capas
+
+#### 1. Validación Frontend
+- Campos requeridos
+- Tipos de datos básicos
+- Rangos simples
+- Formato de entrada
+
+#### 2. Validación Backend
+- Validación exhaustiva de tipos
+- Rangos de negocio
+- Sanitización de entrada
+- Validación de consistencia
+
+#### 3. Validación ML
+- Shape de datos
+- Características esperadas
+- Detección de outliers
+- Validación de resultado
+
+### Medidas de Seguridad
+
+#### Rate Limiting
+```python
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
+limiter = Limiter(
+    key_func=get_remote_address,
+    default_limits=["100 per hour", "10 per minute"]
+)
+
+@app.route('/predict', methods=['POST'])
+@limiter.limit("5 per minute")
+def predict():
+    # Código de predicción
+```
+
+#### Sanitización de Entrada
+```python
+import html
+import re
+
+def sanitizar_entrada(data):
+    sanitized = {}
+    for key, value in data.items():
+        if isinstance(value, str):
+            # Escapar HTML
+            value = html.escape(value)
+            # Remover caracteres especiales
+            value = re.sub(r'[<>"\']', '', value)
+        sanitized[key] = value
+    return sanitized
+```
+
+#### Logging de Seguridad
+```python
+import logging
+
+security_logger = logging.getLogger('security')
+
+def log_security_event(event_type, details):
+    security_logger.warning(f"Security Event: {event_type} - {details}")
+
+# Ejemplo de uso
+if len(errors) > 5:
+    log_security_event("MULTIPLE_VALIDATION_ERRORS", 
+                      f"IP: {request.remote_addr}")
+```
+
+---
+
+## Instalación y Configuración
 
 ### Requisitos del Sistema
-```
-- Python 3.8+ (Recomendado 3.13)
-- 4GB RAM mínimo
-- 2GB espacio libre
-- Navegador web moderno
-- Windows/Linux/macOS
-```
+- **Python**: 3.8 o superior
+- **RAM**: Mínimo 4GB, recomendado 8GB
+- **Disco**: 2GB de espacio libre
+- **SO**: Windows 10/11, macOS 10.14+, Ubuntu 18.04+
 
 ### Instalación Paso a Paso
 
-#### 1. Crear Entorno Virtual
+#### 1. Clonar Repositorio
 ```bash
-# Windows
+git clone https://github.com/carmendez-dev/Predicci-n-de-morosidad-en-Cooperativa.git
+cd Predicci-n-de-morosidad-en-Cooperativa
+```
+
+#### 2. Crear Entorno Virtual
+```bash
 python -m venv entorno
+
+# Windows
 entorno\Scripts\activate
 
-# Linux/macOS  
-python -m venv entorno
+# macOS/Linux
 source entorno/bin/activate
 ```
 
-#### 2. Instalar Dependencias
+#### 3. Instalar Dependencias
 ```bash
 pip install -r requirements.txt
-# O manualmente:
-pip install Flask flask-cors pandas numpy scikit-learn matplotlib seaborn joblib statsmodels
 ```
 
-#### 3. Verificar Instalación
-```bash
-python -c "import flask, pandas, sklearn; print('✅ Todos los módulos instalados')"
-```
-
-#### 4. Entrenar Modelo (Primera vez)
+#### 4. Entrenar Modelo
 ```bash
 python morosidadTrain.py
 ```
@@ -631,307 +685,297 @@ python morosidadTrain.py
 python app.py
 ```
 
-### Configuración Avanzada
+### Configuración de Producción
 
-#### Variables de Entorno (Opcional)
+#### Variables de Entorno
 ```bash
-# .env file
-FLASK_ENV=development
-FLASK_DEBUG=True
-MODEL_PATH=output/
-LOG_PATH=logs/
-PORT=5000
+export FLASK_ENV=production
+export FLASK_DEBUG=False
+export MODEL_PATH=/path/to/models
+export LOG_LEVEL=INFO
 ```
 
-#### Configuración de Producción
+#### Configuración de Servidor
 ```python
-# Para producción, usar WSGI server:
-pip install gunicorn
-gunicorn -w 4 -b 0.0.0.0:5000 app:app
+# config.py
+import os
+
+class ProductionConfig:
+    DEBUG = False
+    TESTING = False
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    MODEL_PATH = os.environ.get('MODEL_PATH', 'output/')
+    LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO')
 ```
 
 ---
 
-## 🧪 TESTING Y CALIDAD
+## Testing y Calidad
 
-### Testing Manual
+### Tests Automatizados
 
-#### 1. Prueba de API
+#### Unit Tests
+```python
+import unittest
+from app import app
+
+class TestPrediccionAPI(unittest.TestCase):
+    def setUp(self):
+        self.app = app.test_client()
+        self.app.testing = True
+    
+    def test_prediction_endpoint(self):
+        """Test del endpoint de predicción"""
+        data = {
+            'edad': 35,
+            'genero': 'Masculino',
+            'ingresos_mensuales': 3000000,
+            # ... más datos
+        }
+        
+        response = self.app.post('/predict', 
+                                json=data,
+                                content_type='application/json')
+        
+        self.assertEqual(response.status_code, 200)
+        result = response.get_json()
+        self.assertIn('prediccion', result)
+        self.assertIn('probabilidades', result)
+```
+
+#### Integration Tests
+```python
+def test_complete_prediction_flow(self):
+    """Test del flujo completo de predicción"""
+    # 1. Enviar datos válidos
+    response = self.send_prediction_request(valid_data)
+    self.assertEqual(response.status_code, 200)
+    
+    # 2. Verificar estructura de respuesta
+    result = response.get_json()
+    self.validate_response_structure(result)
+    
+    # 3. Verificar que se guardó el log
+    self.assertTrue(self.log_exists(result['timestamp']))
+```
+
+### Calidad de Código
+
+#### Linting
 ```bash
-python test_api.py
+# Instalar herramientas
+pip install flake8 black
+
+# Ejecutar linting
+flake8 app.py morosidadTrain.py
+
+# Formatear código
+black app.py morosidadTrain.py
 ```
 
-#### 2. Pruebas del Navegador
-```
-1. Abrir http://127.0.0.1:5000
-2. Probar formulario con datos válidos
-3. Probar validaciones con datos inválidos  
-4. Verificar estadísticas
-5. Probar página demo
-```
+#### Code Coverage
+```bash
+# Instalar coverage
+pip install coverage
 
-### Casos de Prueba
-
-#### Test Case 1: Cliente de Bajo Riesgo
-```json
-{
-    "edad": 45, "genero": "M", "zona": "Urbana",
-    "tipo_empleo": "Gobierno", "antiguedad": 20,
-    "ingresos": 8000.00, "score_crediticio": 810,
-    "esperado": "NO MOROSO", "riesgo_esperado": "BAJO"
-}
-```
-
-#### Test Case 2: Cliente de Alto Riesgo  
-```json
-{
-    "edad": 22, "genero": "F", "zona": "Rural",
-    "tipo_empleo": "Independiente", "antiguedad": 1,
-    "ingresos": 2000.00, "score_crediticio": 550,
-    "esperado": "MOROSO", "riesgo_esperado": "ALTO"
-}
-```
-
-### Métricas de Calidad del Código
-```
-- Líneas de código: ~1,500 líneas
-- Funciones: 25+ funciones
-- Cobertura de validación: 95%
-- Documentación: Completa
-- Comentarios: Extensivos
+# Ejecutar tests con coverage
+coverage run -m unittest discover tests/
+coverage report -m
+coverage html
 ```
 
 ---
 
-## 🔧 MANTENIMIENTO Y ACTUALIZACIÓN
+## Mantenimiento
 
-### Mantenimiento Rutinario
+### Monitoreo del Sistema
 
-#### Diario
-```bash
-# Verificar logs de errores
-tail -f logs/predicciones_$(date +%Y%m%d).json
-
-# Verificar espacio en disco
-df -h
-```
-
-#### Semanal  
-```bash
-# Backup de modelos
-cp -r output/ backup/output_$(date +%Y%m%d)/
-
-# Limpiar logs antiguos (> 30 días)
-find logs/ -name "*.json" -mtime +30 -delete
-```
-
-#### Mensual
-```bash
-# Reentrenar modelo con datos actualizados
-python morosidadTrain.py
-
-# Analizar métricas de uso
-python analyze_logs.py
-```
-
-### Actualización del Modelo
-
-#### 1. Preparar Nuevos Datos
+#### Health Check Endpoint
 ```python
-# Agregar nuevos datos al dataset_credito_morosidad.csv
-# Mantener mismas columnas y formato
+@app.route('/health')
+def health_check():
+    """Endpoint para verificar salud del sistema"""
+    try:
+        # Verificar modelo cargado
+        if modelo is None:
+            return jsonify({'status': 'error', 'message': 'Model not loaded'}), 500
+        
+        # Verificar recursos del sistema
+        import psutil
+        memory_usage = psutil.virtual_memory().percent
+        
+        if memory_usage > 90:
+            return jsonify({'status': 'warning', 'message': 'High memory usage'}), 200
+        
+        return jsonify({
+            'status': 'healthy',
+            'timestamp': datetime.now().isoformat(),
+            'memory_usage': f"{memory_usage:.1f}%"
+        }), 200
+        
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 ```
 
-#### 2. Reentrenar
-```bash
-# Crear backup del modelo actual
-cp output/model_pipeline_final_*.joblib backup/
-
-# Ejecutar entrenamiento
-python morosidadTrain.py
-```
-
-#### 3. Validar Nuevo Modelo
+#### Logging de Sistema
 ```python
-# Comparar métricas:
-# - F1-Score debe mejorar o mantenerse
-# - Revisar overfitting
-# - Probar con casos conocidos
+import logging
+from logging.handlers import RotatingFileHandler
+
+# Configurar logging
+if not app.debug:
+    file_handler = RotatingFileHandler('logs/app.log', maxBytes=10240, backupCount=10)
+    file_handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+    ))
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    app.logger.setLevel(logging.INFO)
+    app.logger.info('Sistema iniciado')
 ```
 
-#### 4. Despliegue
-```bash
-# Reiniciar aplicación para cargar nuevo modelo
-# El sistema carga automáticamente el modelo más reciente
-```
+### Actualizaciones del Modelo
 
-### Monitoreo
-
-#### Métricas a Monitorear
+#### Re-entrenamiento Periódico
 ```python
-# Métricas de sistema:
-- Tiempo de respuesta API
-- Memoria utilizada
-- Espacio en disco
-
-# Métricas de negocio:  
-- Número de predicciones/día
-- Distribución de predicciones
-- Precisión vs casos reales (si disponible)
+def actualizar_modelo(nuevo_dataset_path):
+    """
+    Proceso de actualización del modelo
+    """
+    try:
+        # 1. Cargar nuevos datos
+        nuevo_df = pd.read_csv(nuevo_dataset_path)
+        
+        # 2. Validar calidad de datos
+        if validar_calidad_datos(nuevo_df):
+            
+            # 3. Re-entrenar modelo
+            nuevo_modelo = entrenar_modelo(nuevo_df)
+            
+            # 4. Validar performance
+            if validar_performance(nuevo_modelo):
+                
+                # 5. Backup modelo actual
+                backup_modelo_actual()
+                
+                # 6. Deployar nuevo modelo
+                deployar_modelo(nuevo_modelo)
+                
+                return True
+        
+        return False
+        
+    except Exception as e:
+        app.logger.error(f"Error actualizando modelo: {e}")
+        return False
 ```
 
 ---
 
-## 🚨 TROUBLESHOOTING
+## Troubleshooting
 
 ### Problemas Comunes
 
-#### 1. "No se encontró ningún modelo entrenado"
-```bash
-# Solución:
-python morosidadTrain.py
-# Verificar que se creó: output/model_pipeline_final_*.joblib
-```
-
-#### 2. "ModuleNotFoundError: No module named 'flask'"
-```bash
-# Solución:
-pip install Flask flask-cors
-# O reinstalar entorno completo
-```
-
-#### 3. "Error al cargar el modelo"
-```bash
-# Posibles causas:
-- Archivo corrupto
+#### 1. Modelo No Carga
+**Síntomas**: Error 500 al hacer predicciones
+**Causas**:
+- Archivo de modelo corrupto
 - Versión incompatible de scikit-learn
-- Permisos de archivo
+- Ruta incorrecta
 
-# Solución:
-rm output/model_pipeline_final_*.joblib
+**Solución**:
+```bash
+# Re-entrenar modelo
 python morosidadTrain.py
+
+# Verificar versión de librerías
+pip list | grep scikit-learn
+
+# Verificar ruta
+ls -la output/model_pipeline_final_*.joblib
 ```
 
-#### 4. "Puerto 5000 en uso"
-```bash
-# Windows:
-netstat -ano | findstr :5000
-taskkill /PID <PID> /F
+#### 2. Alta Latencia en Predicciones
+**Síntomas**: Tiempo de respuesta > 5 segundos
+**Causas**:
+- Modelo muy complejo
+- Falta de memoria
+- Procesamiento ineficiente
 
-# Linux/macOS:
-lsof -i :5000
-kill -9 <PID>
-
-# O cambiar puerto en app.py:
-app.run(port=5001)
-```
-
-#### 5. "Predicción muy lenta"
-```bash
-# Posibles causas:
-- Modelo muy grande
-- Muchas predicciones simultáneas
-- Recursos limitados
-
-# Soluciones:
-- Optimizar modelo
-- Implementar cache  
-- Aumentar recursos
-```
-
-### Logs de Error
-
-#### Ubicaciones de Logs
-```
-- Flask errors: Console output
-- Predicción errors: logs/predicciones_*.json  
-- Training errors: Console output durante entrenamiento
-```
-
-#### Interpretar Errores Comunes
+**Solución**:
 ```python
-# ValueError: "X has different number of features"
-# Causa: Datos de entrada no coinciden con entrenamiento
-# Solución: Verificar todos los campos requeridos
+# Optimizar carga del modelo
+@lru_cache(maxsize=1)
+def get_modelo():
+    return joblib.load(model_path)
 
-# JSON Decode Error:
-# Causa: Formato JSON inválido en request
-# Solución: Verificar estructura de datos
+# Usar modelo pre-cargado
+modelo = get_modelo()
+```
 
-# Connection Error:
-# Causa: Servidor Flask no está corriendo
-# Solución: Iniciar app.py
+#### 3. Errores de Validación
+**Síntomas**: Errores constantes de validación
+**Causas**:
+- Datos de entrada incorrectos
+- Validaciones muy estrictas
+- Problemas de encoding
+
+**Solución**:
+```python
+# Logging detallado de validación
+def validar_con_logging(data):
+    errores = []
+    for campo, valor in data.items():
+        try:
+            validar_campo(campo, valor)
+        except ValidationError as e:
+            errores.append(f"{campo}: {e}")
+            app.logger.debug(f"Validation error - {campo}: {valor} - {e}")
+    return errores
+```
+
+### Logs de Diagnóstico
+
+#### Estructura de Logs
+```
+logs/
+├── app.log                    # Log principal de la aplicación
+├── predicciones_YYYY-MM-DD.json  # Log de predicciones por día
+├── errores.log               # Log específico de errores
+└── security.log              # Log de eventos de seguridad
+```
+
+#### Análisis de Logs
+```bash
+# Ver errores recientes
+tail -f logs/errores.log
+
+# Contar predicciones del día
+grep "$(date +%Y-%m-%d)" logs/predicciones_*.json | wc -l
+
+# Buscar errores específicos
+grep "ValidationError" logs/app.log | tail -10
 ```
 
 ---
 
-## 📖 GLOSARIO TÉCNICO
+## Glosario Técnico
 
-### Términos de Machine Learning
-- **Accuracy:** Porcentaje de predicciones correctas
-- **Cross-validation:** Técnica de validación que divide datos en múltiples folds
-- **F1-Score:** Media armónica entre precision y recall  
-- **Feature Engineering:** Proceso de creación/transformación de variables
-- **Overfitting:** Modelo que memoriza datos de entrenamiento pero no generaliza
-- **Pipeline:** Secuencia de pasos de preprocesamiento y modelado
-- **Precision:** Porcentaje de positivos predichos que son realmente positivos
-- **Recall (Sensitivity):** Porcentaje de positivos reales que son detectados
-- **ROC-AUC:** Área bajo la curva ROC, mide capacidad discriminativa
-- **Specificity:** Porcentaje de negativos reales que son correctamente identificados
-
-### Términos de Negocio
-- **Default:** Incumplimiento de pago (morosidad)
-- **Score Crediticio:** Puntaje que refleja historial crediticio (300-850)
-- **Garantía:** Activo que respalda un crédito
-- **Principal:** Monto principal del préstamo
-- **Plazo:** Tiempo en meses para pagar el crédito
-- **Riesgo Crediticio:** Probabilidad de que un cliente no pague
-
-### Términos Técnicos
-- **API:** Application Programming Interface
-- **AJAX:** Asynchronous JavaScript and XML
-- **Endpoint:** URL específica de una API
-- **Flask:** Framework web de Python
-- **JSON:** JavaScript Object Notation
-- **REST:** Representational State Transfer
-- **WSGI:** Web Server Gateway Interface
-
-### Siglas y Abreviaciones
-- **CSV:** Comma-Separated Values
-- **EDA:** Exploratory Data Analysis  
-- **HTML:** HyperText Markup Language
-- **HTTP:** HyperText Transfer Protocol
-- **ML:** Machine Learning
-- **MVC:** Model-View-Controller
-- **UI/UX:** User Interface/User Experience
-- **VIF:** Variance Inflation Factor
+**API**: Application Programming Interface - Interfaz para comunicación entre sistemas
+**Cross-validation**: Técnica de validación cruzada para evaluar modelos
+**Endpoint**: Punto de acceso específico en una API
+**F1-Score**: Métrica que combina precision y recall
+**Flask**: Framework web ligero para Python
+**Joblib**: Librería para serialización eficiente de objetos Python
+**Machine Learning**: Aprendizaje automático usando algoritmos
+**Pipeline**: Secuencia de pasos de procesamiento de datos
+**Precision**: Proporción de predicciones positivas correctas
+**Recall**: Proporción de casos positivos correctamente identificados
+**ROC-AUC**: Área bajo la curva ROC, métrica de calidad del modelo
+**Scikit-learn**: Librería de machine learning para Python
 
 ---
 
-## 📞 SOPORTE Y CONTACTO
-
-### Información del Proyecto
-- **Nombre:** Sistema de Predicción de Morosidad - Ahorro Valle
-- **Versión:** 1.0
-- **Fecha:** 27 de Octubre, 2025
-- **Propósito:** EC2 - Modelado y Simulación de Sistemas
-
-### Recursos Adicionales
-- **Documentación de Usuario:** `README_APP.md`
-- **Guía Rápida:** `GUIA_RAPIDA.md`
-- **Script de Pruebas:** `test_api.py`
-
-### Para Soporte Técnico
-1. Revisar esta documentación
-2. Verificar logs del sistema
-3. Probar con casos de ejemplo
-4. Consultar troubleshooting
-
----
-
-**© 2025 - Sistema de Predicción de Morosidad - Ahorro Valle**  
-*Desarrollado para fines académicos y de demostración*
-
----
-
-*Esta documentación está actualizada al 27 de Octubre, 2025 y corresponde a la versión 1.0 del sistema.*
+**Última actualización**: 28 de Octubre, 2025  
+**Versión del documento**: 1.0  
+**Mantenido por**: Carmen Mendez - Universidad Católica Boliviana "San Pablo"
